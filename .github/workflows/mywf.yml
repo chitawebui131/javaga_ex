@@ -1,12 +1,39 @@
-name: GitHub Actions Demo
+name: GitHub Java Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions
 on:
   push:
+    branches:
+      - main
+      - jenk
   workflow_dispatch:
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "This job's status is ${{ secrets.MY_SECRET_NAME }}."
+    - name: Set up JDK 17
+      uses: action/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'zulu'
 
+    - name: Show Java version
+      run: "java -version"
+
+    - name: Chechkout app code
+      uses: action/checkout@v3
+      with:
+        ref: jenk
+    - name: Show current directory
+      run: 'pwd' 
+
+    - name: Show all files
+      run: 'ls -al' 
+      
+    - name: Install Dependencies
+      run: 'mvn compile'
+
+    - name: Build App
+      run: 'mvn package -DskipTest'       
+
+    - name: Test App
+      run: 'mvn test' 
