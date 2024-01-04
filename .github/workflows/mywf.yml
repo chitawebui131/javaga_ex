@@ -7,8 +7,9 @@ on:
       - jenk
   workflow_dispatch:
 jobs:
-  Explore-GitHub-Actions:
+  myjob:  
     runs-on: ubuntu-latest
+    
     steps:
     - name: Set up JDK 17
       uses: action/setup-java@v3
@@ -23,6 +24,7 @@ jobs:
       uses: action/checkout@v3
       with:
         ref: jenk
+        
     - name: Show current directory
       run: 'pwd' 
 
